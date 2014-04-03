@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+<article class="container">
+    {% block header %}
+
+        {% include 'config/navigation_bar.html' %}
+
+    {% endblock %}
+</article>
+{% block contenido %}
+    <h1>Todo List</h1>
+    <ul>
+        <h1>
+            <li><p class="text-info">Titulo: </p></li>
+            {{ todo_list.title | upper }}
+        </h1>
+        <li>
+            <p class="text-info">Descripción: </p>
+            {{ todo_list.description | capfirst }}
+        </li>
+        <li>
+            <p class="text-info">Compartida con: </p>
+        </li>
+
+        {% for users in todo_list.share_with.all %}
+            <p class="text-muted">{{ users | upper }} </p>
+        {% endfor %}
+    </ul>
+    <div class="container center-block">
+        <a href='{% url "tarea_guardar" %}' class="btn btn-primary">Agregar nueva tarea</a>
+    </div>
+    <blockquote>
+        <p>Lista de tareas.</p>
+    </blockquote>
+
+    <ul>
+        <h2>Lista de tareas del todo list</h2>
+        {% for object in tareas %}
+
+            <table class="table table-striped table-hover">
+                <tr>
+                    <td style="width: 20%">
+                        <p class="text-info">Titulo:</p>
+                        {{ object.title }}
+                    </td>
+                    <td style="width: 30%">
+                        <p class="text-info">Descripción: </p>
+                        {{ object.description }}
+                    </td>
+                    <td style="width: 10%">
+                        <p class="text-info">Prioridad: </p>
+                        {% if  object.priority == 'Alta' %}
+                            <p class="bg-danger">{{ object.priority }}.</p>
+                        {% elif object.priority == 'Media' %}
+                            <p class="bg-warning">{{ object.priority }}.</p>
+                        {% elif object.priority == 'Baja' %}
+                            <p class="bg-success">{{ object.priority }}.</p>
+                        {% endif %}
+                    </td>
+                    <td style="width: 10%">
+                        <p class="text-info">Activa:</p>
+                        {% if  object.check %}
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" checked onclick="return false">
+                                </label>
+                            </div>
+
+                        {% else %}
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" onclick="return false">
+                                </label>
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td style="width: 10%">
+                        <p class="text-info">Creada por:</p>
+                        {{ object.created_user | upper}}
+                    </td>
+                    {% if object.created_user == user %}
+                        <td>
+                            <a href='{% url "tarea_detalles" object.id %}' class="btn btn-primary">Detalles</a>
+                        </td>
+                    {% endif %}
+                </tr>
+            </table>
+        {% empty %}
+            <li>
+                Aún no hay tareas registradas para este todo list
+            </li>
+        {% endfor %}
+
+    </ul>
+
+{% endblock %}

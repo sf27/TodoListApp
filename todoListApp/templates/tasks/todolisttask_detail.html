@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+<article class="col-lg-10">
+    {% block header %}
+
+        {% include 'config/navigation_bar.html' %}
+
+    {% endblock %}
+</article>
+{% block contenido %}
+    <h1>Datos de la tarea:</h1>
+    <ul>
+        <td style="width: 20%">
+            <h2>
+                <li>
+                    <p class="text-info">Titulo: </p>
+                </li>
+            </h2>
+            {{ object.title | upper}}
+        </td>
+        <td style="width: 30%">
+            <p class="text-info">Descripción: </p>
+            {{ object.description | capfirst}}
+        </td>
+        <td style="width: 10%">
+            <p class="text-info">Prioridad: </p>
+            {% if  object.priority == 'Alta' %}
+                <p class="bg-danger">{{ object.priority }}.</p>
+            {% elif object.priority == 'Media' %}
+                <p class="bg-warning">{{ object.priority }}.</p>
+            {% elif object.priority == 'Baja' %}
+                <p class="bg-success">{{ object.priority }}.</p>
+            {% endif %}
+        </td>
+        <td style="width: 10%">
+            <p class="text-info">Activa:</p>
+            {% if  object.check %}
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="" checked onclick="return false">
+                    </label>
+                </div>
+
+            {% else %}
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="" onclick="return false">
+                    </label>
+                </div>
+            {% endif %}
+        </td>
+        <td style="width: 10%">
+            <p class="text-info">Creada por:</p>
+            {{ object.created_user | upper}}
+        </td>
+    </ul>
+    <ul>
+        {% if perms.todo_list.change_todo_list_task %}
+            <a href='{% url "tarea_modificar" object.id %}' class="btn btn-primary">Modificar</a>
+        {% endif %}
+        {% if perms.todo_list.delete_todo_list_task %}
+            <a href='{% url "tarea_eliminar" object.id %}' class="btn btn-primary">Eliminar</a>
+        {% endif %}
+    </ul>
+{% endblock %}

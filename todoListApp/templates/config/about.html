@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+<article class="container">
+    {% block header %}
+
+        {% include 'config/navigation_bar.html' %}
+
+    {% endblock %}
+</article>
+{% block contenido %}
+
+    <div class="page-header">
+        <h1>
+            <h2>Elio Rincón</h2>
+
+            <div class="row">
+                <div class="span4">
+                    <!-- empty has no content per se, but using spacer to prevent collapse -->
+                    <div class="spacer10"></div>
+                </div>
+                <div class="span4">
+                    <h3>Desarrollador Web</h3>
+                </div>
+                <div class="span4">
+                    <h4>Correo: e1987ebrb@gmail.com</h4>
+                </div>
+                <div class="span4">
+                    <h4>Twitter: <a href="https://twitter.com/eliosf27" target="_blank">eliosf27</a></h4>
+                </div>
+                <div class="span4">
+                    <h4>GitHub: <a href="https://github.com/sf27/" target="_blank">sf27</a></h4>
+                </div>
+            </div>
+
+        </h1>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+    {% include 'config/navigation_bar.html' %}
+
+{% endblock %}
+
+{% block contenido %}
+    <blockquote>
+        <p>Lista de todo lists compartidas</p>
+    </blockquote>
+    <ul>
+        {% for object in object_list %}
+            <table class="table table-striped table-hover">
+                <tr>
+                    <td style="width: 20%">
+                        <p class="text-info">Titulo: </p>
+                        {{ object.title | upper | truncatewords:7 }}
+                    </td>
+                    <td style="width: 30%">
+                        <p class="text-info">Descripción: </p>
+                        {{ object.description | capfirst | truncatechars:10 }}
+                    </td>
+                    <td style="width: 10%">
+                        <p class="text-info">Fecha de creación: </p>
+                        {{ object.created_at }}
+                    </td>
+                    <td style="width: 10%">
+                        <p class="text-info">Creado por:</p>
+                        {{ object.created_user | upper }}
+                    </td>
+                    <td style="width: 10%">
+                        <a href='{% url "lista_tareas_de_todolist" object.id %}' class="btn btn-primary">Lista de
+                            tareas</a>
+                    </td>
+
+                </tr>
+            </table>
+        {% empty %}
+            <li>
+                Aún no hay todo list registrados
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

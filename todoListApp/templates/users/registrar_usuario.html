@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block titulo %}
+    Nuevo usuario
+{% endblock %}
+{% block contenido %}
+    <ul class="nav nav-tabs span2 clearfix"></ul>
+
+    <form id="formulario" method="post" action="" class="form-horizontal" role="form">{% csrf_token %}
+        <fieldset>
+            <legend>Registrar nuevo usuario</legend>
+            {% for field in formulario %}
+
+                <label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label }}</label>
+                <div class="col-sm-10">
+                    {{ field.errors }}
+
+                    {{ field }}
+                    {{ field.help_text }}
+                </div>
+            {% endfor %}
+            <div class="form-group span6 row well">
+                <ul class="nav nav-tabs span2 clearfix"></ul>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <div class="form-group span6 row well">
+        <ul class="nav nav-tabs span2 clearfix"></ul>
+        <div class="col-sm-offset-2 col-sm-10">
+            <a class="btn btn-default" href="{% url 'inicio' %}">Atrás</a>
+        </div>
+    </div>
+{% endblock %}
+

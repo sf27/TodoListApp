@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block titulo %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}/css/a.css"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="{{ STATIC_URL }}/js/jquery-2.1.0.js"></script>
+    <script src="{{ STATIC_URL }}/js/bootstrap.min.js"></script>
+    {% block head %}
+        <script type="text/javascript">
+            $(function () {
+                $('.dropdown-toggle').dropdown();
+                {% block jquery %}
+
+                {% endblock %}
+            });
+        </script>
+    {% endblock %}
+</head>
+<body>
+<header class="center-block">
+    {% block header %}
+    {% endblock %}
+</header>
+
+<div class="container center-block">
+    <section id="contenido" class=" container row">
+        <br><br> <br><br>
+        {% block contenido %}
+
+        {% endblock %}
+    </section>
+</div>
+<br><br> <br><br>
+<footer class="page-footer navbar-fixed-bottom col-sm-2 center-block">
+    {% block footer %}
+
+        <div id="footer">
+            <div class="container">
+                <p class="text-muted credit">Copyright 2014 - Elio Rincón.</p>
+            </div>
+        </div>
+    {% endblock %}
+
+</footer>
+</body>
+</html>
