@@ -3,32 +3,34 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
-from todoListApp.views import TodoListTaskCreateView, TodoListTaskDeleteView, TodoListTaskUpdateView, TodoListTaskDetailView, TodoListTaskListView
-from todoListApp.views import TodoListCreateView, TodoListDeleteView, TodoListUpdateView, TodoListDetailView, TodoListListView
+from todoListApp.views.viewTask import TodoListTaskCreateView, TodoListTaskDeleteView, TodoListTaskUpdateView, TodoListTaskDetailView, TodoListTaskListView
+from todoListApp.views.viewTodo import TodoListCreateView, TodoListDeleteView, TodoListUpdateView, TodoListDetailView, TodoListListView
 
 admin.autodiscover()
 
 login_url = '/'
 urlpatterns = patterns('',
                        #login view
-                       url(r'^$', 'todoListApp.views.loginUser', name='inicio'),
-
-                       #main view -> need to be login
-                       url(r'^principal/$', 'todoListApp.views.principal', name='principal'),
+                       url(r'^$', 'todoListApp.views.viewUser.loginUser', name='inicio'),
 
                        #close sesion -> need to be login
-                       url(r'^cerrar-sesion/$', 'todoListApp.views.cerrar_sesion', name='cerrar_sesion'),
+                       url(r'^cerrar-sesion/$', 'todoListApp.views.viewUser.close_user_sesion', name='cerrar_sesion'),
 
                        #register new user
-                       url(r'^registrar-usuario/$', 'todoListApp.views.registrar_usuario', name='registrar_usuario'),
+                       url(r'^registrar-usuario/$', 'todoListApp.views.viewUser.register_users',
+                           name='registrar_usuario'),
 
-                       #list of task from the id of todo list
-                       url(r'lista_tareas_de_todolist/(?P<id_todo_list>\d+)/$', 'todoListApp.views.lista_tareas_de_todo_list', name="lista_tareas_de_todolist"),
+                       #main view -> need to be login
+                       url(r'^principal/$', 'todoListApp.views.viewMain.main', name='principal'),
 
                        #about view
-                       url(r'^sobre/$', 'todoListApp.views.sobre', name='sobre'),
+                       url(r'^sobre/$', 'todoListApp.views.viewMain.about', name='sobre'),
 
-        #taks
+                       #list of task from the id of todo list
+                       url(r'lista_tareas_de_todolist/(?P<id_todo_list>\d+)/$',
+                           'todoListApp.views.viewTask.lists_taks_of_todo_list', name="lista_tareas_de_todolist"),
+
+                       #taks
                        #ListView
                        url(r'^tareas_registrados/$', login_required(TodoListTaskListView.as_view(), login_url),
                            name='tareas_registradas'),
@@ -45,7 +47,7 @@ urlpatterns = patterns('',
                        #DeleteView
                        url(r'tarea/(?P<pk>\d+)/eliminar/$', login_required(TodoListTaskDeleteView.as_view(), login_url),
                            name='tarea_eliminar'),
-        #todos
+                       #todos
                        #ListView
                        url(r'^todolist_registrados/$', login_required(TodoListListView.as_view(), login_url),
                            name='todolist_registrados'),
@@ -62,7 +64,7 @@ urlpatterns = patterns('',
                        url(r'todolist/(?P<pk>\d+)/eliminar/$', login_required(TodoListDeleteView.as_view(), login_url),
                            name='todolist_eliminar'),
 
-        #admin
+                       #admin
                        #admin view
                        url(r'^admin/', include(admin.site.urls)),
 )
